@@ -1,6 +1,6 @@
-import sys
-
 import pygame
+
+substances = {}
 
 
 def main():
@@ -10,19 +10,24 @@ def main():
     running = True
     table = pygame.image.load('Pictures/table.jpg')
     screen.blit(table, (0, 0))
+    picture = False
     while running:
         for event in pygame.event.get():
-            print(event)
-            if event == pygame.QUIT:
+            if event.type == pygame.QUIT:
                 running = False
-            elif event == pygame.MOUSEBUTTONDOWN:
-                x, y = event.pos
-                column = (x - 95) // 40 + 1
-                string = (y - 37) // 40 + 1
-                print(column, string)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                if not picture:
+                    x, y = event.pos
+                    column = (x - 95) // 40 + 1
+                    string = (y - 37) // 40 + 1
+                    print(column, string)
+                    #  screen.blit(substances[(column, string)], (250, 150))
+                    picture = True
+                else:
+                    screen.blit(table, (0, 0))
+                    picture = False
         pygame.display.flip()
     pygame.quit()
-    sys.exit()
 
 
 if __name__ == '__main__':
